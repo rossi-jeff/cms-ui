@@ -5,7 +5,7 @@ import router from "./router";
 
 Vue.config.productionTip = false;
 
-import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
+import { BootstrapVue, IconsPlugin  } from "bootstrap-vue";
 
 // Import Bootstrap and BootstrapVue CSS files (order is important)
 import "bootstrap/dist/css/bootstrap.css";

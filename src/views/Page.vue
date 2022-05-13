@@ -28,6 +28,12 @@
               :row="row"
               @addColumn="addColumn"
               @updateColumn="updateColumn"
+							@deleteRow="deleteRow"
+							@deleteColumn="deleteColumn"
+							@addRowClass="addRowClass"
+							@deleteRowClass="deleteRowClass"
+							@addColumnClass="addColumnClass"
+							@deleteColumnClass="deleteColumnClass"
             />
           </b-card-text>
         </b-tab>
@@ -346,6 +352,110 @@ export default {
         this.loadRows();
       }
     },
+		async deleteRow(event) {
+			const { UUID } = event;
+      const { baseUrl, defaultHeaders } = this;
+      const { Token } = this.session;
+      let headers = defaultHeaders;
+      headers.Authorization = `Bearer ${Token}`;
+      const url = `${baseUrl}/row/${UUID}`;
+      const results = await fetch(url, {
+        method: "DELETE",
+        mode: "cors",
+        headers,
+      });
+			if (results.ok) {
+				this.loadRows()
+			}
+		},
+		async deleteColumn(event) {
+			const { UUID } = event;
+      const { baseUrl, defaultHeaders } = this;
+      const { Token } = this.session;
+      let headers = defaultHeaders;
+      headers.Authorization = `Bearer ${Token}`;
+      const url = `${baseUrl}/column/${UUID}`;
+      const results = await fetch(url, {
+        method: "DELETE",
+        mode: "cors",
+        headers,
+      });
+			if (results.ok) {
+				this.loadRows()
+			}
+		},
+		async addRowClass(event) {
+			const { UUID, Name, Order } = event
+			const { baseUrl, defaultHeaders } = this;
+      const { Token } = this.session;
+      let headers = defaultHeaders;
+      headers.Authorization = `Bearer ${Token}`;
+			const url = `${baseUrl}/row/${UUID}/class`;
+			const results = await fetch(url, {
+        method: "POST",
+        mode: "cors",
+        body: JSON.stringify({
+          Name,
+          Order,
+        }),
+        headers,
+      });
+      if (results.ok) {
+        this.loadRows();
+      }
+		},
+		async deleteRowClass(event) {
+			const { UUID } = event;
+      const { baseUrl, defaultHeaders } = this;
+      const { Token } = this.session;
+      let headers = defaultHeaders;
+      headers.Authorization = `Bearer ${Token}`;
+			const url = `${baseUrl}/css-class/${UUID}`;
+      const results = await fetch(url, {
+        method: "DELETE",
+        mode: "cors",
+        headers,
+      });
+			if (results.ok) {
+				this.loadRows()
+			}
+		},
+		async addColumnClass(event) {
+			const { UUID, Name, Order } = event
+			const { baseUrl, defaultHeaders } = this;
+      const { Token } = this.session;
+      let headers = defaultHeaders;
+      headers.Authorization = `Bearer ${Token}`;
+			const url = `${baseUrl}/column/${UUID}/class`;
+			const results = await fetch(url, {
+        method: "POST",
+        mode: "cors",
+        body: JSON.stringify({
+          Name,
+          Order,
+        }),
+        headers,
+      });
+      if (results.ok) {
+        this.loadRows();
+      }
+		},
+		async deleteColumnClass(event) {
+			const { UUID } = event;
+      const { baseUrl, defaultHeaders } = this;
+      const { Token } = this.session;
+      let headers = defaultHeaders;
+      headers.Authorization = `Bearer ${Token}`;
+			const url = `${baseUrl}/css-class/${UUID}`;
+      const results = await fetch(url, {
+        method: "DELETE",
+        mode: "cors",
+        headers,
+      });
+			if (results.ok) {
+				this.loadRows()
+			}
+		}
   },
   mounted() {
     this.uuid = this.$route.params.uuid;
