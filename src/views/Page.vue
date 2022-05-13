@@ -22,7 +22,7 @@
               style="margin-bottom: 0.5em"
               >Add Row</b-button
             >
-            <CardRow v-for="row of rows" :key="row.UUID" :row="row" />
+            <CardRow v-for="row of rows" :key="row.UUID" :row="row" @addColumn="addColumn" @updateColumn="updateColumn" />
           </b-card-text>
         </b-tab>
         <b-tab title="Styles">
@@ -391,6 +391,54 @@ export default {
         this.loadRows();
       }
     },
+    async addColumn(event) {
+      const {
+        baseUrl,
+        defaultHeaders
+      } = this;
+      const { UUID, Content, Order } = event
+      const {
+        Token
+      } = this.session;
+      let headers = defaultHeaders;
+      headers.Authorization = `Bearer ${Token}`;
+      const url = `${baseUrl}/row/${UUID}/column`;
+      const results = await fetch(url, {
+        method: "POST",
+        mode: "cors",
+        body: JSON.stringify({
+          Content, Order,
+        }),
+        headers,
+      });
+      if (results.ok) {
+        this.loadRows();
+      }
+    },
+    async updateColumn(event) {
+      const {
+        baseUrl,
+        defaultHeaders
+      } = this;
+      const { UUID, Content } = event
+      const {
+        Token
+      } = this.session;
+      let headers = defaultHeaders;
+      headers.Authorization = `Bearer ${Token}`;
+      const url = `${baseUrl}/column/${UUID}`;
+      const results = await fetch(url, {
+        method: "PATCH",
+        mode: "cors",
+        body: JSON.stringify({
+          Content,
+        }),
+        headers,
+      });
+      if (results.ok) {
+        this.loadRows();
+      }
+    }
   },
   mounted() {
     this.uuid = this.$route.params.uuid;
