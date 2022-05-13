@@ -45,11 +45,7 @@
 				</div>
 				<div class="row">
 					<div class="col-10">
-						<b-form-textarea
-							name="Content"
-							v-model="column.Content"
-							placeholder="Enter column content"
-						></b-form-textarea>
+						<editor :api-key="ApiKey" v-model="column.Content" />
 					</div>
 					<div class="col-2">
 						<b-button
@@ -82,9 +78,8 @@
 						class="col"
 						v-for="column of row.Columns"
 						:key="column.UUID"
-						:column="column"
+						v-html="column.Content"
 					>
-						{{ column.Content }}
 					</div>
 				</div>
 			</div>
@@ -94,12 +89,17 @@
 
 <script>
 import CardColumn from './CardColumn'
+import Editor from '@tinymce/tinymce-vue'
+const ApiKey = process.env.VUE_APP_TINY_MCE_API_KEY
+
 export default {
 	components: {
+		editor: Editor,
 		CardColumn,
 	},
 	props: ['row'],
 	data: () => ({
+		ApiKey,
 		editing: false,
 		editor: null,
 		column: {
@@ -119,9 +119,6 @@ export default {
 	methods: {
 		toggleEdit() {
 			this.editing = !this.editing
-			if (this.editing) {
-				this.loadEditor()
-			}
 		},
 		addColumn() {
 			const { Content, Order } = this.column

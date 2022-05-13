@@ -45,11 +45,7 @@
 				</div>
 				<div class="row">
 					<div class="col-10">
-						<b-form-textarea
-							name="Content"
-							v-model="Content"
-							placeholder="Enter column content"
-						></b-form-textarea>
+						<editor :api-key="ApiKey" v-model="Content" />
 					</div>
 					<div class="col-2">
 						<b-button
@@ -71,16 +67,22 @@
 				<div v-if="column.CssClasses && column.CssClasses.length">
 					Classes: {{ column.CssClasses.map(c => c.Name).join(', ') }}
 				</div>
-				<div>{{ Content }}</div>
+				<div v-html="Content"></div>
 			</div>
 		</b-card-text>
 	</b-card>
 </template>
 
 <script>
+import Editor from '@tinymce/tinymce-vue'
+const ApiKey = process.env.VUE_APP_TINY_MCE_API_KEY
 export default {
 	props: ['column'],
+	components: {
+		editor: Editor,
+	},
 	data: () => ({
+		ApiKey,
 		editing: false,
 		Content: '',
 		disabled: {
