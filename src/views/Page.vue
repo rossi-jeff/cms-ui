@@ -22,7 +22,13 @@
               style="margin-bottom: 0.5em"
               >Add Row</b-button
             >
-            <CardRow v-for="row of rows" :key="row.UUID" :row="row" @addColumn="addColumn" @updateColumn="updateColumn" />
+            <CardRow
+              v-for="row of rows"
+              :key="row.UUID"
+              :row="row"
+              @addColumn="addColumn"
+              @updateColumn="updateColumn"
+            />
           </b-card-text>
         </b-tab>
         <b-tab title="Styles">
@@ -55,10 +61,7 @@
 <script>
 import CardStyle from "../components/cards/CardStyle";
 import CardRow from "../components/cards/CardRow";
-import {
-  baseUrl,
-  defaultHeaders
-} from "../utils";
+import { baseUrl, defaultHeaders } from "../utils";
 export default {
   components: {
     CardStyle,
@@ -76,14 +79,8 @@ export default {
   }),
   methods: {
     async loadPage() {
-      const {
-        baseUrl,
-        defaultHeaders,
-        uuid
-      } = this;
-      const {
-        Token
-      } = this.session;
+      const { baseUrl, defaultHeaders, uuid } = this;
+      const { Token } = this.session;
       let headers = defaultHeaders;
       headers.Authorization = `Bearer ${Token}`;
       const url = `${baseUrl}/page/${uuid}`;
@@ -97,14 +94,8 @@ export default {
       }
     },
     async loadRows() {
-      const {
-        baseUrl,
-        defaultHeaders,
-        uuid
-      } = this;
-      const {
-        Token
-      } = this.session;
+      const { baseUrl, defaultHeaders, uuid } = this;
+      const { Token } = this.session;
       let headers = defaultHeaders;
       headers.Authorization = `Bearer ${Token}`;
       const url = `${baseUrl}/page/${uuid}/row`;
@@ -120,14 +111,8 @@ export default {
       }
     },
     async loadStyles() {
-      const {
-        baseUrl,
-        defaultHeaders,
-        uuid
-      } = this;
-      const {
-        Token
-      } = this.session;
+      const { baseUrl, defaultHeaders, uuid } = this;
+      const { Token } = this.session;
       let headers = defaultHeaders;
       headers.Authorization = `Bearer ${Token}`;
       this.stylesRendered = false;
@@ -143,14 +128,8 @@ export default {
       }
     },
     async addStyle() {
-      const {
-        baseUrl,
-        defaultHeaders,
-        uuid
-      } = this;
-      const {
-        Token
-      } = this.session;
+      const { baseUrl, defaultHeaders, uuid } = this;
+      const { Token } = this.session;
       let headers = defaultHeaders;
       headers.Authorization = `Bearer ${Token}`;
       const url = `${baseUrl}/page/${uuid}/style`;
@@ -168,18 +147,9 @@ export default {
       }
     },
     async addSelector(event) {
-      const {
-        UUID,
-        Name,
-        Order
-      } = event;
-      const {
-        baseUrl,
-        defaultHeaders
-      } = this;
-      const {
-        Token
-      } = this.session;
+      const { UUID, Name, Order } = event;
+      const { baseUrl, defaultHeaders } = this;
+      const { Token } = this.session;
       let headers = defaultHeaders;
       headers.Authorization = `Bearer ${Token}`;
       const url = `${baseUrl}/style/${UUID}/selector`;
@@ -199,19 +169,9 @@ export default {
       }
     },
     async addRule(event) {
-      const {
-        UUID,
-        Property,
-        Value,
-        Order
-      } = event;
-      const {
-        baseUrl,
-        defaultHeaders
-      } = this;
-      const {
-        Token
-      } = this.session;
+      const { UUID, Property, Value, Order } = event;
+      const { baseUrl, defaultHeaders } = this;
+      const { Token } = this.session;
       let headers = defaultHeaders;
       headers.Authorization = `Bearer ${Token}`;
       const url = `${baseUrl}/style/${UUID}/rule`;
@@ -232,17 +192,9 @@ export default {
       }
     },
     async updateSelector(event) {
-      const {
-        Name,
-        UUID
-      } = event;
-      const {
-        baseUrl,
-        defaultHeaders
-      } = this;
-      const {
-        Token
-      } = this.session;
+      const { Name, UUID } = event;
+      const { baseUrl, defaultHeaders } = this;
+      const { Token } = this.session;
       let headers = defaultHeaders;
       headers.Authorization = `Bearer ${Token}`;
       const url = `${baseUrl}/selector/${UUID}`;
@@ -261,18 +213,9 @@ export default {
       }
     },
     async updateRule(event) {
-      const {
-        UUID,
-        Property,
-        Value
-      } = event;
-      const {
-        baseUrl,
-        defaultHeaders
-      } = this;
-      const {
-        Token
-      } = this.session;
+      const { UUID, Property, Value } = event;
+      const { baseUrl, defaultHeaders } = this;
+      const { Token } = this.session;
       let headers = defaultHeaders;
       headers.Authorization = `Bearer ${Token}`;
       const url = `${baseUrl}/rule/${UUID}`;
@@ -292,16 +235,9 @@ export default {
       }
     },
     async deleteStyle(event) {
-      const {
-        UUID
-      } = event;
-      const {
-        baseUrl,
-        defaultHeaders
-      } = this;
-      const {
-        Token
-      } = this.session;
+      const { UUID } = event;
+      const { baseUrl, defaultHeaders } = this;
+      const { Token } = this.session;
       let headers = defaultHeaders;
       headers.Authorization = `Bearer ${Token}`;
       const url = `${baseUrl}/style/${UUID}`;
@@ -317,16 +253,9 @@ export default {
       }
     },
     async deleteSelector(event) {
-      const {
-        UUID
-      } = event;
-      const {
-        baseUrl,
-        defaultHeaders
-      } = this;
-      const {
-        Token
-      } = this.session;
+      const { UUID } = event;
+      const { baseUrl, defaultHeaders } = this;
+      const { Token } = this.session;
       let headers = defaultHeaders;
       headers.Authorization = `Bearer ${Token}`;
       const url = `${baseUrl}/selector/${UUID}`;
@@ -342,16 +271,9 @@ export default {
       }
     },
     async deleteRule(event) {
-      const {
-        UUID
-      } = event;
-      const {
-        baseUrl,
-        defaultHeaders
-      } = this;
-      const {
-        Token
-      } = this.session;
+      const { UUID } = event;
+      const { baseUrl, defaultHeaders } = this;
+      const { Token } = this.session;
       let headers = defaultHeaders;
       headers.Authorization = `Bearer ${Token}`;
       const url = `${baseUrl}/rule/${UUID}`;
@@ -367,14 +289,8 @@ export default {
       }
     },
     async addRow() {
-      const {
-        baseUrl,
-        defaultHeaders,
-        uuid
-      } = this;
-      const {
-        Token
-      } = this.session;
+      const { baseUrl, defaultHeaders, uuid } = this;
+      const { Token } = this.session;
       let headers = defaultHeaders;
       headers.Authorization = `Bearer ${Token}`;
       const url = `${baseUrl}/page/${uuid}/row`;
@@ -392,14 +308,9 @@ export default {
       }
     },
     async addColumn(event) {
-      const {
-        baseUrl,
-        defaultHeaders
-      } = this;
-      const { UUID, Content, Order } = event
-      const {
-        Token
-      } = this.session;
+      const { baseUrl, defaultHeaders } = this;
+      const { UUID, Content, Order } = event;
+      const { Token } = this.session;
       let headers = defaultHeaders;
       headers.Authorization = `Bearer ${Token}`;
       const url = `${baseUrl}/row/${UUID}/column`;
@@ -407,7 +318,8 @@ export default {
         method: "POST",
         mode: "cors",
         body: JSON.stringify({
-          Content, Order,
+          Content,
+          Order,
         }),
         headers,
       });
@@ -416,14 +328,9 @@ export default {
       }
     },
     async updateColumn(event) {
-      const {
-        baseUrl,
-        defaultHeaders
-      } = this;
-      const { UUID, Content } = event
-      const {
-        Token
-      } = this.session;
+      const { baseUrl, defaultHeaders } = this;
+      const { UUID, Content } = event;
+      const { Token } = this.session;
       let headers = defaultHeaders;
       headers.Authorization = `Bearer ${Token}`;
       const url = `${baseUrl}/column/${UUID}`;
@@ -438,7 +345,7 @@ export default {
       if (results.ok) {
         this.loadRows();
       }
-    }
+    },
   },
   mounted() {
     this.uuid = this.$route.params.uuid;
