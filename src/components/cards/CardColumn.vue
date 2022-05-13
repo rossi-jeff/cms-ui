@@ -1,62 +1,77 @@
 <template>
 	<b-card>
 		<b-card-text>
-			<div class="row py-2">
-				<div class="col-8">
-					<div
-						class="d-inline p-2 mt-2 mx-2 border"
-						v-for="cssClass of column.CssClasses"
-						:key="cssClass.UUID"
-					>
-						<span class="mx-2 text-dark">{{ cssClass.Name }}</span>
-						<b-button
-							class="close"
-							aria-label="Close"
-							size="sm"
-							@click="deleteColumnClass(cssClass.UUID)"
+			<b-button
+				variant="outline-primary"
+				size="sm"
+				@click="toggleEdit"
+				style="margin-bottom: 0.5em"
+				>Toggle</b-button
+			>
+			<div v-if="editing">
+				<div class="row py-2">
+					<div class="col-8">
+						<div
+							class="d-inline p-2 mt-2 mx-2 border"
+							v-for="cssClass of column.CssClasses"
+							:key="cssClass.UUID"
 						>
-							<span aria-hidden="true">&times;</span>
-						</b-button>
+							<span class="mx-2 text-dark">{{ cssClass.Name }}</span>
+							<b-button
+								class="close"
+								aria-label="Close"
+								size="sm"
+								@click="deleteColumnClass(cssClass.UUID)"
+							>
+								<span aria-hidden="true">&times;</span>
+							</b-button>
+						</div>
+						<div v-if="!column.CssClasses.length">No CSS Classes</div>
 					</div>
-					<div v-if="!column.CssClasses.length">No CSS Classes</div>
+					<div class="col-2">
+						<b-form-input
+							v-model="className.Name"
+							placeholder="Enter class name"
+						></b-form-input>
+					</div>
+					<div class="col-2">
+						<b-button
+							variant="outline-primary"
+							@click="addColumnClass"
+							:disabled="disabled.className"
+							>Add Class</b-button
+						>
+					</div>
 				</div>
-				<div class="col-2">
-					<b-form-input
-						v-model="className.Name"
-						placeholder="Enter class name"
-					></b-form-input>
-				</div>
-				<div class="col-2">
-					<b-button
-						variant="outline-primary"
-						@click="addColumnClass"
-						:disabled="disabled.className"
-						>Add Class</b-button
-					>
+				<div class="row">
+					<div class="col-10">
+						<b-form-textarea
+							name="Content"
+							v-model="Content"
+							placeholder="Enter column content"
+						></b-form-textarea>
+					</div>
+					<div class="col-2">
+						<b-button
+							variant="outline-primary"
+							:disabled="disabled.update"
+							@click="updateColumn"
+							>Update Column</b-button
+						>
+						<b-button
+							variant="outline-danger"
+							:disabled="disabled.delete"
+							@click="deleteColumn"
+							>Delete Column</b-button
+						>
+					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-10">
-					<b-form-textarea
-						name="Content"
-						v-model="Content"
-						placeholder="Enter column content"
-					></b-form-textarea>
+			<div v-if="!editing">
+				<div v-if="column.CssClasses && column.CssClasses.length">
+					Classes: {{ column.CssClasses.map(c => c.Name).join(', ') }}
 				</div>
-				<div class="col-2">
-					<b-button
-						variant="outline-primary"
-						:disabled="disabled.update"
-						@click="updateColumn"
-						>Update Column</b-button
-					>
-					<b-button
-						variant="outline-danger"
-						:disabled="disabled.delete"
-						@click="deleteColumn"
-						>Delete Column</b-button
-					>
-				</div>
+				<div>{{ Content }}</div>
 			</div>
 		</b-card-text>
 	</b-card>
@@ -66,6 +81,7 @@
 export default {
 	props: ['column'],
 	data: () => ({
+		editing: false,
 		Content: '',
 		disabled: {
 			update: false,
@@ -78,6 +94,9 @@ export default {
 		},
 	}),
 	methods: {
+		toggleEdit() {
+			this.editing = !this.editing
+		},
 		updateColumn() {
 			const { Content } = this
 			const { UUID } = this.column
@@ -107,6 +126,9 @@ export default {
 	},
 	mounted() {
 		this.Content = this.column.Content
+		if (this.column.CssClasses) {
+			this.className.Order = this.column.CssClasses.length
+		}
 	},
 }
 </script>

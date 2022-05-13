@@ -101,6 +101,7 @@ export default {
 	props: ['row'],
 	data: () => ({
 		editing: false,
+		editor: null,
 		column: {
 			Content: '',
 			Order: 0,
@@ -118,6 +119,9 @@ export default {
 	methods: {
 		toggleEdit() {
 			this.editing = !this.editing
+			if (this.editing) {
+				this.loadEditor()
+			}
 		},
 		addColumn() {
 			const { Content, Order } = this.column
@@ -157,7 +161,7 @@ export default {
 		},
 		deleteColumnClass(event) {
 			this.$emit('deleteColumnClass', event);
-		}
+		},
 	},
 	mounted() {
 		if (this.row.Columns) {

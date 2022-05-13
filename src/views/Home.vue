@@ -6,13 +6,7 @@
       <b-button variant="outline-primary" @click="login">Sign In</b-button>
     </b-card-text>
   </b-card>
-  <b-card v-if="session.SignedIn && sites.length">
-    <b-card-text>
-      <h4>Sites</h4>
-      <CardSite v-for="site of sites" :key="site.Id" :site="site" />
-    </b-card-text>
-  </b-card>
-  <b-card v-if="session.SignedIn">
+	<b-card v-if="session.SignedIn">
     <b-card-text>
       <div class="row">
         <div class="col-10">
@@ -22,6 +16,12 @@
           <b-button variant="outline-primary" @click="addSite">Add Site</b-button>
         </div>
       </div>
+    </b-card-text>
+  </b-card>
+  <b-card v-if="session.SignedIn && sites.length">
+    <b-card-text>
+      <h4>Sites</h4>
+      <CardSite v-for="site of sites" :key="site.Id" :site="site" />
     </b-card-text>
   </b-card>
 </div>
@@ -111,7 +111,6 @@ export default {
       });
       if (results.ok) {
         this.sites = await results.json();
-        console.log(this.sites);
       }
     },
     async addSite() {
