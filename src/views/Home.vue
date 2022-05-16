@@ -6,6 +6,12 @@
       <b-button variant="outline-primary" @click="login">Sign In</b-button>
     </b-card-text>
   </b-card>
+  <b-card v-if="!session.SignedIn">
+    <b-card-text>
+      If you do not have login credentials please
+      <router-link to="/register">Register</router-link>
+    </b-card-text>
+  </b-card>
 	<b-card v-if="session.SignedIn">
     <b-card-text>
       <div class="row">
