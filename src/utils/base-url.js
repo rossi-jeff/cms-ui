@@ -1,1 +1,1 @@
-export const baseUrl = "http://cms-api.jeff-rossi.com";
+export const baseUrl = "https://cmsapi.jeff-rossi.com";
